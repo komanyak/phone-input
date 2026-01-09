@@ -1,0 +1,63 @@
+@use '@shared/styles/variables.scss' as *;
+
+.countrySelector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: $country-selector-width;
+  height: $input-height;
+  background: $white-default;
+  border: 1px solid $gray-light;
+  border-radius: $radius-default;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  padding: 0 $spacing-xs;
+
+  &:hover:not(:disabled) {
+    border-color: $primary-default;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-default;
+  }
+
+  &.error {
+    border-color: $error-light;
+  }
+
+  &.success {
+    border-color: $success-default;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: $gray-light;
+  }
+}
+
+.emoji {
+  font-size: $font-size-default;
+  line-height: $line-height-default;
+}
+
+.prefix {
+  @include text-base;
+  color: $black-default;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $black-default;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+
+  &.arrowUp {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,53 @@
+@use '@shared/styles/variables.scss' as *;
+
+.digitInput {
+  width: $digit-input-width;
+  height: $input-height;
+  padding: $spacing-sm 0;
+  background: $white-default;
+  border: 1px solid $gray-light;
+  border-radius: $radius-default;
+  @include text-base;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+  caret-color: $black-default;
+
+  &:hover:not(:disabled) {
+    border-color: $primary-default;
+  }
+
+  &:focus,
+  &.focused {
+    border-color: $primary-default;
+  }
+
+  &.error {
+    border-color: $error-light;
+
+    &:hover:not(:disabled),
+    &:focus {
+      border-color: $error-light;
+    }
+  }
+
+  &.success {
+    border-color: $success-default;
+
+    &:hover:not(:disabled),
+    &:focus {
+      border-color: $success-default;
+    }
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: $gray-light;
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+}

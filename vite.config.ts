@@ -4,17 +4,7 @@ import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        presets: [
-          '@babel/preset-env',
-          '@babel/preset-react',
-          '@babel/preset-typescript',
-        ],
-      },
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       '@app': resolve(__dirname, 'src/app'),
