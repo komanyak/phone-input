@@ -1,0 +1,12 @@
+@use '../src/shared/styles/variables.scss' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include text-base;
+  background-color: #f5f7fa;
+}
