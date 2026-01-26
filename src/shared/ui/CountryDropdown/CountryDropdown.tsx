@@ -18,8 +18,8 @@ export const CountryDropdown = ({
   if (!isOpen) return null
 
   return (
-    <div className={styles.dropdown} role="listbox">
-      <div className={styles.scrollContainer}>
+    <div className={styles.root} role="listbox">
+      <div className={styles.root__scrollContainer}>
         {countries.map((country) => (
           <CountryItem
             key={country.key}

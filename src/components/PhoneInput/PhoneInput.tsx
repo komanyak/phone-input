@@ -41,7 +41,7 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
 
       if (groupIndex === 0) {
         elements.push(
-          <span key="open-bracket" className={styles.separator}>(</span>
+          <span key="open-bracket" className={styles.root__separator}>(</span>
         )
       }
 
@@ -75,20 +75,20 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
       }
 
       elements.push(
-        <div key={`group-${groupIndex}`} className={styles.digitGroup}>
+        <div key={`group-${groupIndex}`} className={styles.root__digitGroup}>
           {groupInputs}
         </div>
       )
 
       if (groupIndex === 0) {
         elements.push(
-          <span key="close-bracket" className={styles.separator}>)</span>
+          <span key="close-bracket" className={styles.root__separator}>)</span>
         )
       }
 
       if (groupIndex < store.maskGroups.length - 1) {
         elements.push(
-          <span key={`sep-${groupIndex}`} className={styles.separator}>-</span>
+          <span key={`sep-${groupIndex}`} className={styles.root__separator}>-</span>
         )
       }
     })
@@ -97,8 +97,8 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
   }
 
   return (
-    <div className={styles.phoneInputContainer} ref={containerRef}>
-      <div className={styles.phoneInput}>
+    <div className={styles.root} ref={containerRef}>
+      <div className={styles.root__input}>
         <CountrySelector
           emoji={store.selectedCountry.emoji}
           prefix={store.selectedCountry.prefix}

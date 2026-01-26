@@ -1,6 +1,6 @@
 @use '@shared/styles/variables.scss' as *;
 
-.countrySelector {
+.root {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,41 +23,41 @@
     border-color: $primary-default;
   }
 
-  &.error {
+  &_error {
     border-color: $error-light;
   }
 
-  &.success {
+  &_success {
     border-color: $success-default;
   }
 
-  &.disabled,
+  &_disabled,
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     border-color: $gray-light;
   }
-}
 
-.emoji {
-  font-size: $font-size-default;
-  line-height: $line-height-default;
-}
+  &__emoji {
+    font-size: $font-size-default;
+    line-height: $line-height-default;
+  }
 
-.prefix {
-  @include text-base;
-  color: $black-default;
-}
+  &__prefix {
+    @include text-base;
+    color: $black-default;
+  }
 
-.arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $black-default;
-  margin-left: auto;
-  transition: transform 0.2s ease;
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $black-default;
+    margin-left: auto;
+    transition: transform 0.2s ease;
 
-  &.arrowUp {
-    transform: rotate(180deg);
+    &_up {
+      transform: rotate(180deg);
+    }
   }
 }

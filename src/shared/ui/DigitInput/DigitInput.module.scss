@@ -1,6 +1,6 @@
 @use '@shared/styles/variables.scss' as *;
 
-.digitInput {
+.root {
   width: $digit-input-width;
   height: $input-height;
   padding: $spacing-sm 0;
@@ -18,11 +18,11 @@
   }
 
   &:focus,
-  &.focused {
+  &_focused {
     border-color: $primary-default;
   }
 
-  &.error {
+  &_error {
     border-color: $error-light;
 
     &:hover:not(:disabled),
@@ -31,7 +31,7 @@
     }
   }
 
-  &.success {
+  &_success {
     border-color: $success-default;
 
     &:hover:not(:disabled),
@@ -40,7 +40,7 @@
     }
   }
 
-  &.disabled,
+  &_disabled,
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;

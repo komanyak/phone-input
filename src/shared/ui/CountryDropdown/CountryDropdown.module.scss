@@ -1,6 +1,6 @@
 @use '@shared/styles/variables.scss' as *;
 
-.dropdown {
+.root {
   position: absolute;
   top: calc(#{$input-height} + 10px);
   left: 0;
@@ -11,27 +11,27 @@
   border-radius: $radius-default;
   z-index: 1000;
   overflow: hidden;
-}
 
-.scrollContainer {
-  height: 100%;
-  overflow-y: auto;
-  padding: $spacing-xs 0;
+  &__scrollContainer {
+    height: 100%;
+    overflow-y: auto;
+    padding: $spacing-xs 0;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background: #C4C4C4;
-    border-radius: 2px;
+    &::-webkit-scrollbar-thumb {
+      background: #C4C4C4;
+      border-radius: 2px;
 
-    &:hover {
-      background: #b0b0b0;
+      &:hover {
+        background: #b0b0b0;
+      }
     }
   }
 }

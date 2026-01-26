@@ -21,16 +21,16 @@ export const CountrySelector = ({
 }: CountrySelectorProps) => {
   return (
     <button 
-      className={`${styles.countrySelector} ${styles[state]} ${disabled ? styles.disabled : ''}`}
+      className={`${styles.root} ${state !== 'default' ? styles[`root_${state}`] : ''} ${disabled ? styles.root_disabled : ''}`}
       onClick={onClick}
       type="button"
       disabled={disabled}
       aria-haspopup="listbox"
       aria-expanded={isOpen}
     >
-      <span className={styles.emoji}>{emoji}</span>
-      <span className={styles.prefix}>{prefix}</span>
-      <span className={`${styles.arrow} ${isOpen ? styles.arrowUp : ''}`}>
+      <span className={styles.root__emoji}>{emoji}</span>
+      <span className={styles.root__prefix}>{prefix}</span>
+      <span className={`${styles.root__arrow} ${isOpen ? styles.root__arrow_up : ''}`}>
         <ArrowDownIcon />
       </span>
     </button>

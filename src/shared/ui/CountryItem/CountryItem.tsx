@@ -11,14 +11,14 @@ export type CountryItemProps = {
 export const CountryItem = ({ emoji, prefix, name, onClick, isActive }: CountryItemProps) => {
   return (
     <div 
-      className={`${styles.countryItem} ${isActive ? styles.active : ''}`}
+      className={`${styles.root} ${isActive ? styles.root_active : ''}`}
       onClick={onClick}
       role="option"
       aria-selected={isActive}
     >
-      <span className={styles.emoji}>{emoji}</span>
-      <span className={styles.prefix}>{prefix}</span>
-      <span className={styles.name}>{name}</span>
+      <span className={styles.root__emoji}>{emoji}</span>
+      <span className={styles.root__prefix}>{prefix}</span>
+      <span className={styles.root__name}>{name}</span>
     </div>
   )
 }
