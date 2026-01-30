@@ -6,21 +6,22 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 body {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  overflow: visible;
   @include text-base;
   background-color: #f5f7fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
 }
 
 .root {
