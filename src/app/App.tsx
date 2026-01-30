@@ -1,60 +1,79 @@
+import { useState } from 'react'
 import { PhoneInput } from '@components/PhoneInput'
 import { COUNTRY_MASKS } from '@shared/constants/countries'
 import styles from './App.module.scss'
 
 function App() {
+  const [surname, setSurname] = useState('')
+  const [name, setName] = useState('')
+  const [patronymic, setPatronymic] = useState('')
+  const [phone, setPhone] = useState('')
+
   const handlePhoneChange = (value: string) => {
-    console.log('Phone changed:', value)
+    setPhone(value)
   }
 
   return (
     <div className={styles.root}>
-      <div className={styles.root__section}>
-        <h2 className={styles.root__title}>Default</h2>
-        <PhoneInput
-          masks={COUNTRY_MASKS}
-          onChange={handlePhoneChange}
-        />
-      </div>
+      <form
+        className={styles.root__form}
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <h2 className={styles.root__title}>Ввод данных</h2>
 
-      <div className={styles.root__section}>
-        <h2 className={styles.root__title}>With Value</h2>
-        <PhoneInput
-          masks={COUNTRY_MASKS}
-          value="+71234567890"
-          onChange={handlePhoneChange}
-        />
-      </div>
+        <div className={styles.root__field}>
+          <label className={styles.root__label} htmlFor="surname">
+            Фамилия
+          </label>
+          <input
+            id="surname"
+            type="text"
+            className={styles.root__input}
+            placeholder="Иванов"
+            value={surname}
+            onChange={(e) => setSurname(e.target.value)}
+          />
+        </div>
 
-      <div className={styles.root__section}>
-        <h2 className={styles.root__title}>Error</h2>
-        <PhoneInput
-          masks={COUNTRY_MASKS}
-          value="+7 (987) 654 - 32 - 10"
-          state="error"
-          onChange={handlePhoneChange}
-        />
-      </div>
+        <div className={styles.root__field}>
+          <label className={styles.root__label} htmlFor="name">
+            Имя
+          </label>
+          <input
+            id="name"
+            type="text"
+            className={styles.root__input}
+            placeholder="Иван"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-      <div className={styles.root__section}>
-        <h2 className={styles.root__title}>Success</h2>
-        <PhoneInput
-          masks={COUNTRY_MASKS}
-          value="79998887766"
-          state="success"
-          onChange={handlePhoneChange}
-        />
-      </div>
+        <div className={styles.root__field}>
+          <label className={styles.root__label} htmlFor="patronymic">
+            Отчество
+          </label>
+          <input
+            id="patronymic"
+            type="text"
+            className={styles.root__input}
+            placeholder="Иванович"
+            value={patronymic}
+            onChange={(e) => setPatronymic(e.target.value)}
+          />
+        </div>
 
-      <div className={styles.root__section}>
-        <h2 className={styles.root__title}>Disabled</h2>
-        <PhoneInput
-          masks={COUNTRY_MASKS}
-          value="+7 555 444 33 22"
-          disabled={true}
-          onChange={handlePhoneChange}
-        />
-      </div>
+        <div className={styles.root__field}>
+          <label className={styles.root__label}>Телефон</label>
+          <PhoneInput
+            masks={COUNTRY_MASKS}
+            value={phone}
+            onChange={handlePhoneChange}
+          />
+        </div>
+
+      
+      </form>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo, type ReactElement } from 'react'
+import { useRef, useEffect, useMemo, useCallback, type ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 import { DigitInput, CountrySelector, CountryDropdown } from '@shared/ui'
 import type { CountryMask, DigitInputState } from '@shared/types'
@@ -15,11 +15,30 @@ type PhoneInputProps = {
 
 export const PhoneInput = observer(({ masks, value, onChange, state = 'default', disabled = false }: PhoneInputProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  
-  const store = useMemo(
-    () => new PhoneInputStore(masks, value, onChange, state),
-    [masks, value, onChange, state]
+  const lastEmittedValueRef = useRef<string | null>(null)
+
+  const wrappedOnChange = useCallback(
+    (v: string) => {
+      lastEmittedValueRef.current = v
+      onChange?.(v)
+    },
+    [onChange]
   )
+
+  const store = useMemo(
+    () => new PhoneInputStore(masks, value ?? '', wrappedOnChange, state),
+    [masks, wrappedOnChange, state]
+  )
+
+  useEffect(() => {
+    if (value === undefined) return
+    if (value === lastEmittedValueRef.current) {
+      lastEmittedValueRef.current = null
+      return
+    }
+    lastEmittedValueRef.current = null
+    store.setValue(value)
+  }, [value, store])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -52,20 +71,35 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
             key={currentIndex}
             ref={(el) => store.setInputRef(currentIndex, el)}
             value={store.digits[currentIndex] || ''}
-            state={store.state}
+            state={store.effectiveState}
             disabled={disabled}
             onChange={(e) => {
               if (!disabled) {
                 store.setDigit(currentIndex, e.target.value)
               }
             }}
+            onFocus={(e) => {
+              requestAnimationFrame(() => {
+                const input = e.target
+                const len = input.value.length
+                input.setSelectionRange(len, len)
+              })
+            }}
             onKeyDown={(e) => {
               if (disabled) return
-              if (e.key === 'Backspace') {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                store.setValidationResult(store.validate() ? 'success' : 'error')
+              } else if (e.key === 'Backspace') {
                 store.handleBackspace(currentIndex)
+              } else if (e.key === 'Delete') {
+                e.preventDefault()
+                store.setDigit(currentIndex, '')
               } else if (e.key === 'ArrowLeft') {
+                e.preventDefault()
                 store.handleArrowLeft(currentIndex)
               } else if (e.key === 'ArrowRight') {
+                e.preventDefault()
                 store.handleArrowRight(currentIndex)
               }
             }}
@@ -103,9 +137,9 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
           emoji={store.selectedCountry.emoji}
           prefix={store.selectedCountry.prefix}
           isOpen={store.isDropdownOpen}
-          state={store.state}
-          disabled={disabled}
-          onClick={() => !disabled && store.toggleDropdown()}
+            state={store.effectiveState}
+            disabled={disabled}
+            onClick={() => !disabled && store.toggleDropdown()}
         />
         
         {renderPhoneInputs()}

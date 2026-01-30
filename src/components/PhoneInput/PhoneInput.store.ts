@@ -8,12 +8,13 @@ export class PhoneInputStore {
   masks: CountryMask[]
   inputRefs: (HTMLInputElement | null)[] = []
   state: DigitInputState = 'default'
+  validationOverride: 'error' | 'success' | null = null
 
   private onChangeCallback?: (value: string) => void
 
   constructor(
-    masks: CountryMask[], 
-    initialValue?: string, 
+    masks: CountryMask[],
+    initialValue?: string,
     onChange?: (value: string) => void,
     state: DigitInputState = 'default'
   ) {
@@ -31,6 +32,24 @@ export class PhoneInputStore {
     if (initialValue) {
       this.parseAndSetValue(initialValue)
     }
+  }
+
+  get effectiveState(): DigitInputState {
+    return this.validationOverride ?? this.state
+  }
+
+  get isFilled(): boolean {
+    return this.digits
+      .slice(0, this.totalDigits)
+      .every((d) => d !== '' && d !== undefined)
+  }
+
+  validate(): boolean {
+    return this.isFilled
+  }
+
+  setValidationResult(result: 'error' | 'success') {
+    this.validationOverride = result
   }
 
 
@@ -70,6 +89,7 @@ export class PhoneInputStore {
     
     if (index >= 0 && index < this.totalDigits) {
       this.digits[index] = digitValue
+      this.validationOverride = null
 
       if (this.onChangeCallback) {
         this.onChangeCallback(this.formattedValue)
@@ -146,9 +166,17 @@ export class PhoneInputStore {
     const input = this.inputRefs[index]
     if (input) {
       input.focus()
+      requestAnimationFrame(() => {
+        const len = input.value.length
+        input.setSelectionRange(len, len)
+      })
     }
   }
 
+
+  setValue(value: string) {
+    this.parseAndSetValue(value)
+  }
 
   private parseAndSetValue(value: string) {
     const digitsOnly = value.replace(/\D/g, '')
@@ -159,8 +187,8 @@ export class PhoneInputStore {
       phoneDigits = digitsOnly.slice(prefix.length)
     }
 
-    for (let i = 0; i < Math.min(phoneDigits.length, this.totalDigits); i++) {
-      this.digits[i] = phoneDigits[i]
+    for (let i = 0; i < this.totalDigits; i++) {
+      this.digits[i] = phoneDigits[i] ?? ''
     }
   }
 }
