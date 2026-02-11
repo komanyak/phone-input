@@ -73,6 +73,7 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
             value={store.digits[currentIndex] || ''}
             state={store.effectiveState}
             disabled={disabled}
+            data-testid={`digit-${currentIndex}`}
             onChange={(e) => {
               if (!disabled) {
                 store.setDigit(currentIndex, e.target.value)
@@ -131,15 +132,16 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
   }
 
   return (
-    <div className={styles.root} ref={containerRef}>
+    <div className={styles.root} ref={containerRef} data-testid="phone-input">
       <div className={styles.root__input}>
         <CountrySelector
           emoji={store.selectedCountry.emoji}
           prefix={store.selectedCountry.prefix}
           isOpen={store.isDropdownOpen}
-            state={store.effectiveState}
-            disabled={disabled}
-            onClick={() => !disabled && store.toggleDropdown()}
+          state={store.effectiveState}
+          disabled={disabled}
+          onClick={() => !disabled && store.toggleDropdown()}
+          data-testid="country-selector"
         />
         
         {renderPhoneInputs()}
@@ -150,6 +152,7 @@ export const PhoneInput = observer(({ masks, value, onChange, state = 'default',
         selectedKey={store.selectedCountry.key}
         onSelect={(country) => !disabled && store.selectCountry(country)}
         isOpen={store.isDropdownOpen && !disabled}
+        data-testid="country-dropdown"
       />
     </div>
   )

@@ -9,24 +9,27 @@ type CountrySelectorProps = {
   onClick: () => void
   state?: DigitInputState
   disabled?: boolean
+  'data-testid'?: string
 }
 
-export const CountrySelector = ({ 
-  emoji, 
-  prefix, 
-  isOpen, 
-  onClick, 
+export const CountrySelector = ({
+  emoji,
+  prefix,
+  isOpen,
+  onClick,
   state = 'default',
-  disabled = false 
+  disabled = false,
+  'data-testid': dataTestId = 'country-selector'
 }: CountrySelectorProps) => {
   return (
-    <button 
+    <button
       className={`${styles.root} ${state !== 'default' ? styles[`root_${state}`] : ''} ${disabled ? styles.root_disabled : ''}`}
       onClick={onClick}
       type="button"
       disabled={disabled}
       aria-haspopup="listbox"
       aria-expanded={isOpen}
+      data-testid={dataTestId}
     >
       <span className={styles.root__emoji}>{emoji}</span>
       <span className={styles.root__prefix}>{prefix}</span>

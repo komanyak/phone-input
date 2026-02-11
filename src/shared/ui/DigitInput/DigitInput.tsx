@@ -15,6 +15,7 @@ export const DigitInput = forwardRef<HTMLInputElement, DigitInputProps>(
         maxLength={1}
         disabled={disabled}
         className={`${styles.root} ${state !== 'default' ? styles[`root_${state}`] : ''} ${disabled ? styles.root_disabled : ''} ${className || ''}`}
+        data-state={state}
         {...props}
       />
     )
